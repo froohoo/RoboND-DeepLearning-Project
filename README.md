@@ -25,6 +25,7 @@ To solve this problem, the solution presented will be to build a fully convoluti
  
 ## Approach
 The approach taken was start with the basic architecture shown in Section 32 for the lab decoder. As covered in that section, a Fully Convolutional Network consists of two major sections: the encoder and the decoder. By reducing the encoder to a 1x1 convolution layer, we preserve the spatial information that is needed for our application of following the hero. A reproduction of that design (which is used in this submission) is shown below.
+![FCN](FCN.png)
 
 
  
