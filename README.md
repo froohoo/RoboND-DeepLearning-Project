@@ -43,11 +43,19 @@ The learning rate determines how fast the the error gradeient descent converges 
  ![High Learning Rate](TrainingCurveHighLearningRate.png)
  
  ### Batch Size
- Batch size was varied from 64 to 128 and attempted at 256 as well. The batch size made negligable difference in performance between 64 and 128, but crashed the script due to an out of resource error when set at 256.
+ Batch size determines the number of samples that propogate through the network in a single pass and was varied from 64 to 128 and attempted at 256 as well. The batch size made negligable difference in performance between 64 and 128, but crashed the script due to an out of resource error when set at 256.
  
  ### Epochs
- The epochs determines the number of times the entire training set is passed through the network. In the course experimenting with the number of epochs, it was found that counter-intuitively, more epochs do do not always result in better IOU results. For example, with identical settings, only varying the epoch from 5 to 4, the IOU score increased from .437 to .443. It is possible this is due to either the training model beginning to over-fit for the given parameters, or oscilation error 
+ The epochs determines the number of times the entire training set is passed through the network. In the course experimenting with the number of epochs, it was found that counter-intuitively, more epochs do do not always result in better IOU results. For example, with identical settings, only varying the epoch from 5 to 4, the IOU score increased from .59 to .61 It is possible this is due to either the training model beginning to over-fit for the given parameters, or oscilation prior to convergence.
  
+ ### Steps per Epoch
+ Steps per epoch represents the number of images in the training dataset that go the network in each epoch. Based on the recomendation provided, of dividing the image count by the batch size a starting point would be 32. This resulted in a model with a score of 0. As a result, the steps was set to 200, 150 then 100 with 150 providing a good balance between computational time and model score.
+ 
+ ### Validation Steps
+ The validation steps is used to determine how many validation images go through the network per epoch. This was left at the provided value of 50. However, in general it is desirable to have as many validations images as possible go through the network (all if possible) per epoch as different validation sets will necessarily lead to slightly differnt results based on the images selected from the set.
+ 
+ ### Workers
+ The worker parameter determines the number of sub-processes to spin up. Since all of the training was done on the AWS instance, this was left at it's default value.
  
   Increasing the number of filters (depth) will increase the models ability to detect features, but will come at the cost of slowing the model training.
  
