@@ -27,10 +27,22 @@ To solve this problem, the solution presented will be to build a fully convoluti
 The approach taken was start with the basic architecture shown in Section 32 for the lab decoder. As covered in that section, a Fully Convolutional Network consists of two major sections: the encoder and the decoder. By reducing the encoder to a 1x1 convolution layer, we can preserve the spatial information that is needed for our application (following the hero). A reproduction of that design (which was used for this submission) is shown below.
 ![FCN](FCN.png)
 
-Each convolution sweeps its filter(or kernel) across the input one 'step-size' at a time to extract n-features from the image based on the n-filters specified. The output is a convolution layer that is contains stack of all the activated filters. By applying each filter *separately* to each channel of the input, choosing separable convolution layers reduce the number of parameters required. In addition to extracting the features, spatial pooling is also iplemented to reduce the size as it's depth increases and makes the model more scale independent. Increasing the number of filters (depth) will increase the models ability to detect features, but will come at the cost of slowing the model training. 
-In the decoder section the feature set is upsampled back to the original image size to output such that we have an output image that pixel for pixel we can map predictions to the outputs. Because the pooling / upsampling done by the FCN is spatially lossy, skip connections are also incorporated into this model  
+Each convolution sweeps its filter(or kernel) across the input one 'step-size' at a time to extract n-features from the image based on the n-filters specified. The output is a convolution layer that is contains stack of all the activated filters. By applying each filter *separately* to each channel of the input separable convolution layers reduce the number of parameters required. In addition to extracting the features, spatial pooling is also iplemented to reduce the layer size as the depth increases and make the model more scale independent. 
+In the decoder section the feature set is upsampled back to the original image size such that we have an output image that pixel for pixel maps the predictions from the FCN. Because the pooling / upsampling done by the FCN is spatially lossy, skip connections are also incorporated into this model so that spatial resolution is of features is improved. 
 
+## Parameters Used
+Once the architecture was finalized, the following model hyperparameters were configured prior to training the model on the AWS instance used for this project.
+
+### Learning Rate
+The learning rate determines how fast the the error gradeient descent converges to minimize the error. Learning rates that are too low can falsely converge on local minima or be too computationally intensive. The learning curve below shows a training run with a learning rate of 0.0001. While it does appear to be converging after 10 epochs, this run did not provide a IOU score that was passable. 
+ ![Low Learning Rate](TrainingCurveLowLearningRate.png).
+ In following runs, the learning rate was decreased, but contrary to intuition, increasing the learning rate did not have a significant impact on the time to run each epoch. It did however result in training converging faster with fewer epochs. Below is a training cure wiht the learning rate set to 0.01.
+ ![High Learning Rate](TrainingCurveHighLearningRate)
  
+ ###
+ 
+ 
+  Increasing the number of filters (depth) will increase the models ability to detect features, but will come at the cost of slowing the model training.
  
 
 The filters were increased iteratively for this submission, and it was found that increasing beyond a depth of 32 and 64 for the filters respectively resulted in the enviroment failing with out of resource errors. Another option for increasing the accuracy of the model was to add additional seperable convolution layers, however since the requirements were met without it, that was not attempted. 
