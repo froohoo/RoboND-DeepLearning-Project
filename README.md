@@ -36,8 +36,10 @@ Once the architecture was finalized, the following model hyperparameters were co
 ### Learning Rate
 The learning rate determines how fast the the error gradeient descent converges to minimize the error. Learning rates that are too low can falsely converge on local minima or be too computationally intensive. The learning curve below shows a training run with a learning rate of 0.0001. While it does appear to be converging after 10 epochs, this run did not provide a IOU score that was passable. 
  ![Low Learning Rate](TrainingCurveLowLearningRate.png).
+ 
  In following runs, the learning rate was decreased, but contrary to intuition, increasing the learning rate did not have a significant impact on the time to run each epoch. It did however result in training converging faster with fewer epochs. Below is a training cure wiht the learning rate set to 0.01.
- ![High Learning Rate](TrainingCurveHighLearningRate)
+ 
+ ![High Learning Rate](TrainingCurveHighLearningRate.png)
  
  ###
  
