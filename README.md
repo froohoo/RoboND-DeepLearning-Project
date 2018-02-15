@@ -57,8 +57,27 @@ The learning rate determines how fast the the error gradeient descent converges 
  ### Workers
  The worker parameter determines the number of sub-processes to spin up. Since all of the training was done on the AWS instance, this was left at it's default value.
  
-  Increasing the number of filters (depth) will increase the models ability to detect features, but will come at the cost of slowing the model training.
  
+ ## Results
+  A total of 8 training runs were executed on the AWS instance using the provided test data sat 
+ 
+  Increasing the number of filters (depth) will increase the models ability to detect features, but will come at the cost of slowing the model training. Run 7 provided the optimum results, with the following parameters discussed above:  
+  - Learning Rate   :   0.01
+  - Batch Size      : 128
+  - Epochs          :   4
+  - Steps/Epoch     : 150
+  - Validation Steps:  50
+  
+ ### Comparison with ground Truth Labels
+ 
+ ***Following Target***
+ ![Following_Target](Following_Target.png)
+ 
+ ***No Target***
+ ![No Target](No_Target.png)
+ 
+ ***Target Distant***
+ ![Target_distant](Target_distant.png)
 
 The filters were increased iteratively for this submission, and it was found that increasing beyond a depth of 32 and 64 for the filters respectively resulted in the enviroment failing with out of resource errors. Another option for increasing the accuracy of the model was to add additional seperable convolution layers, however since the requirements were met without it, that was not attempted. 
 
