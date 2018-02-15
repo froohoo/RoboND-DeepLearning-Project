@@ -34,14 +34,19 @@ In the decoder section the feature set is upsampled back to the original image s
 Once the architecture was finalized, the following model hyperparameters were configured prior to training the model on the AWS instance used for this project.
 
 ### Learning Rate
-The learning rate determines how fast the the error gradeient descent converges to minimize the error. Learning rates that are too low can falsely converge on local minima or be too computationally intensive. The learning curve below shows a training run with a learning rate of 0.0001. While it does appear to be converging after 10 epochs, this run did not provide a IOU score that was passable. 
+The learning rate determines how fast the the error gradeient descent converges to minimize the error. Learning rates that are too low can falsely converge on local minima or be too computationally intensive. The learning curve below shows a training run with a learning rate of 0.0001. While it does appear to be converging after 10 epochs, this run did not provide a IOU score that was passable. I do believe it would have utlimately been successful if the epochs was increased to 20, but would have taken several hours to train at these settings.
+
  ![Low Learning Rate](TrainingCurveLowLearningRate.png).
  
  In following runs, the learning rate was decreased, but contrary to intuition, increasing the learning rate did not have a significant impact on the time to run each epoch. It did however result in training converging faster with fewer epochs. Below is a training cure wiht the learning rate set to 0.01.
  
  ![High Learning Rate](TrainingCurveHighLearningRate.png)
  
- ###
+ ### Batch Size
+ Batch size was varied from 64 to 128 and attempted at 256 as well. The batch size made negligable difference in performance between 64 and 128, but crashed the script due to an out of resource error when set at 256.
+ 
+ ### Epochs
+ The epochs determines the number of times the entire training set is passed through the network. In the course experimenting with the number of epochs, it was found that counter-intuitively, more epochs do do not always result in better IOU results. For example, with identical settings, only varying the epoch from 5 to 4, the IOU score increased from .437 to .443. It is possible this is due to either the training model beginning to over-fit for the given parameters, or oscilation error 
  
  
   Increasing the number of filters (depth) will increase the models ability to detect features, but will come at the cost of slowing the model training.
